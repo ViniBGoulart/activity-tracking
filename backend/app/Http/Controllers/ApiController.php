@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use JWTAuth;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -57,7 +57,7 @@ class ApiController extends Controller
         }
 
         //Request is validated
-        //Crean token
+        //Create token
         try {
             if (! $token = JWTAuth::attempt($credentials)) {
                 return response()->json([
@@ -66,7 +66,6 @@ class ApiController extends Controller
                 ], 400);
             }
         } catch (JWTException $e) {
-            return $credentials;
             return response()->json([
                 'success' => false,
                 'message' => 'Could not create token.',
