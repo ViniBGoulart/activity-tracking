@@ -23,3 +23,5 @@ Route::group(['middleware' => 'jwt.verify', 'prefix' => 'auth'], function ($rout
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);
 });
+
+//TODO: admin role that can register & delete users

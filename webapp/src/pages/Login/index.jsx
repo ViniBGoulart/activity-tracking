@@ -18,9 +18,11 @@ export default function Login() {
 
   const onLogin = async (data) => {
     try {
-      const res = await api.post("api/login", [data.email, data.password]);
+      const res = await api.post("api/login", {
+        email: data.email, 
+        password: data.password
+      });
       localStorage.setItem("token", res.data.token);
-      console.log(res);
 
       history.push("/home");
     } catch (err) {
