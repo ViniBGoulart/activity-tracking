@@ -29,6 +29,9 @@ Go to the project directory
   composer install
 ```
 ```bash
+  php artisan jwt:secret
+```
+```bash
   php artisan serve
 ```
 
@@ -45,9 +48,3 @@ Go to the project directory
 ```bash
   npm start
 ```
-
-
-# Activity Tracking
-
-Registry your activity with a timer to count and control the hours spent. 
-I did this for control hours worked outside the company, because the existing software which does this is in company local
