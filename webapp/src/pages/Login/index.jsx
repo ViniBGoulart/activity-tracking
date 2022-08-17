@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, useHistory } from "react-router-dom";
-import { FiLogIn } from "react-icons/fi";
 import { useForm } from "react-hook-form";
 
 import api from "../../services/api";
@@ -22,7 +21,6 @@ export default function Login() {
         email: data.email,
         password: data.password,
       });
-      console.log(res);
       localStorage.setItem("token", res.data.token);
 
       history.push("/home");
