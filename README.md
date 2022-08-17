@@ -29,6 +29,9 @@ Go to the project directory
   composer install
 ```
 ```bash
+  php artisan migrate
+```
+```bash
   php artisan jwt:secret
 ```
 ```bash
