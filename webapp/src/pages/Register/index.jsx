@@ -24,7 +24,7 @@ export default function Register() {
         password: data.password,
         password_confirmation: data.confirmPassword,
       });
-      if (res.data.status) {
+      if (res.status) {
         const resLogin = await api.post("api/login", {
           email: data.email,
           password: data.password,
