@@ -7,15 +7,14 @@ import api from "../../services/api";
 import "../../styles/globals.css";
 
 export default function Login() {
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
         formState: { errors },
         formState,
     } = useForm();
-
-    const navigate = useNavigate();
-
+    
     const onLogin = async (data) => {
         try {
             const res = await api.post("api/login", {
