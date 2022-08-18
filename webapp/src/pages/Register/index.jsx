@@ -29,7 +29,7 @@ export default function Register() {
           email: data.email,
           password: data.password,
         });
-        localStorage.setItem("token", resLogin.data.token);
+        localStorage.setItem("token", resLogin.data.access_token);
 
         navigate("/home");
       }
