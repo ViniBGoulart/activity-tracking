@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import api from "../../services/api";
@@ -13,7 +13,7 @@ export default function Login() {
     formState: { errors },
     formState,
   } = useForm();
-  const history = useHistory("");
+  const navigate = useNavigate();
 
   const onLogin = async (data) => {
     try {
@@ -23,9 +23,9 @@ export default function Login() {
       });
       localStorage.setItem("token", res.data.token);
 
-      history.push("/home");
+      navigate("/home");
     } catch (err) {
-      alert("Falha no login, tente novamente.");
+      alert("Error on Login, try again.");
     }
   };
 
@@ -59,7 +59,7 @@ export default function Login() {
             </label>
             <input
               className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-              placeholder="******************"
+              placeholder="******"
               type="password"
               {...register("password")}
             />
@@ -74,14 +74,11 @@ export default function Login() {
             >
               Sign In
             </button>
-            <a
-              className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-              href="#"
-            >
-              <Link className="back-link" to="/register">
-                Register
-              </Link>
-            </a>
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              onClick={() => navigate('/register')}>
+              Register
+            </button>
           </div>
         </form>
       </div>
