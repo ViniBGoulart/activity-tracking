@@ -21,7 +21,7 @@ export default function Login() {
         email: data.email,
         password: data.password,
       });
-      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("token", res.data.access_token);
 
       navigate("/home");
     } catch (err) {
