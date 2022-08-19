@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
 
 import api from "../../services/api";
 
 import "../../styles/globals.css";
 
 import NavBar from "../../components/Navbar";
-import CardProject from "./CardProject"
+import CardProject from "./CardCreateProject"
 
 export default function Home() {
     const navigate = useNavigate();
@@ -53,6 +52,7 @@ export default function Home() {
             },
         })
             .then((res) => {
+                console.log(res)
                 setProject([...projects], res.data);
             })
             .catch((err) => {
@@ -60,7 +60,7 @@ export default function Home() {
                     localStorage.clear();
                     navigate("/login");
                 } else {
-                    alert("Error");
+                    alert('Err')
                 }
             });
     };
@@ -69,6 +69,10 @@ export default function Home() {
         <React.Fragment>
             <NavBar />
             <CardProject onInsertProject={onInsertProject} />
+
+            {projects.map(project => (
+                <div>{project.name}</div>
+            ))}
         </React.Fragment>
     );
 }
