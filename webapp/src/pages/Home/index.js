@@ -44,7 +44,7 @@ export default function Home() {
         fetchData();
     }, [token]);
 
-    const onInsertProject = (data) => {
+    const onInsertProject = data => {
         api.post("/api/auth/projects", data, {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -63,6 +63,26 @@ export default function Home() {
             });
     };
 
+    const onDeleteProject = data => {
+        api.delete(`/api/auth/projects/${data.id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }).then(res => {
+            setProject((prevState) => prevState.filter(obj => {
+                return obj.id !== data.id
+            }));
+        })
+        .catch(err => {
+            if (err.status && err.status === (401 || 498)) {
+                localStorage.clear();
+                navigate("/login");
+            } else {
+                console.log(err)
+            }
+        })
+    };
+
     return (
         <React.Fragment>
             <NavBar />
@@ -74,6 +94,7 @@ export default function Home() {
                     key={project.id}
                     name={project.name}
                     description={project.description}
+                    onDeleteProject={onDeleteProject}
                 />
             ))}
         </React.Fragment>
