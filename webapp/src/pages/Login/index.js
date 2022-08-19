@@ -14,7 +14,7 @@ export default function Login() {
         formState: { errors },
         formState,
     } = useForm();
-    
+
     const onLogin = async (data) => {
         try {
             const res = await api.post("api/login", {
@@ -68,14 +68,12 @@ export default function Login() {
                         </p>
                     </div>
                     <div className="flex items-center justify-between">
-                        <Button 
-                            name="Sign In"
+                        <Button
                             type="submit"
-                        />
-                        <Button 
-                            name="Register"
+                        >Sign In</Button>
+                        <Button
                             navigate="/register"
-                        />
+                        >Register</Button>
                     </div>
                 </form>
             </div>

@@ -44,9 +44,8 @@ export default function CardCreateProject({ onInsertProject }) {
                 </div>
                 <div className="flex items-center justify-between">
                     <Button
-                        name="Send"
                         onClick={handleSubmit}
-                    />
+                    >Send</Button>
                 </div>
             </CardContainer>
         </React.Fragment>

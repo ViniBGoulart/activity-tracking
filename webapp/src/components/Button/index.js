@@ -14,12 +14,14 @@ export default function Button(props) {
     }
 
     return (
-        <button 
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline"
-            type={props.type ?? 'button'}
-            onClick={handleOnClick}
-        >
-            {props.name}
-        </button>
+        <>
+            <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline"
+                type={props.type ?? 'button'}
+                onClick={handleOnClick}
+            >
+                {props.children}
+            </button>
+        </>
     )
 }
