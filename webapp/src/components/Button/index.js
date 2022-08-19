@@ -8,6 +8,9 @@ export default function Button(props) {
         if (props.navigate) {
             return navigate(props.navigate)
         }
+        if (props.onClick) {
+            return props.onClick()
+        }
     }
 
     return (
