@@ -22,7 +22,6 @@ export default function Home() {
         }
 
         async function fetchData() {
-            console.log('busca')
             api.get("/api/auth/projects", {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -48,15 +47,13 @@ export default function Home() {
     }, [token]);
 
     const onInsertProject = (data) => {
-        console.log('insere')
         api.post("/api/auth/projects", data, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         })
             .then((res) => {
-                console.log(res)
-                setProject([...projects], res.data);
+                setProject((prevState) => [...prevState, res.data]);
             })
             .catch((err) => {
                 if (err.status && err.status === (401 || 498)) {
