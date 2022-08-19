@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import Button from '../../../components/Button'
 
-export default function CardProject({ onInsertProject }) {
+export default function CardCreateProject({ onInsertProject }) {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
 
@@ -20,7 +20,7 @@ export default function CardProject({ onInsertProject }) {
 
     return (
         <div className="flex items-center justify-center items-center">
-            <div className="w-full max-w-lg">
+            <div className="w-full max-w-lg mx-4">
                 <div className="bg-white shadow-md w-full rounded px-8 pt-6 pb-8 mb-4">
                     <div className="mb-4">
                         <input
@@ -42,7 +42,7 @@ export default function CardProject({ onInsertProject }) {
                         />
                     </div>
                     <div className="flex items-center justify-between">
-                        <Button 
+                        <Button
                             name="Send"
                             onClick={handleSubmit}
                         />
