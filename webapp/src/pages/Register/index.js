@@ -4,8 +4,6 @@ import { useForm } from "react-hook-form";
 
 import api from "../../services/api";
 
-import "../../styles/globals.css";
-
 import Button from '../../components/Button'
 
 export default function Register() {
@@ -77,18 +75,16 @@ export default function Register() {
               {...register("confirmPassword")}
             />
             <Button
-              name="Create Account"
               type="submit"
-            />
+            >Create Account</Button>
           </form>
         </div>
 
         <div className="text-grey-dark mt-6 flex justify-between items-center container">
           <p>Already have an account?</p>
-          <Button 
-            name="Login"
+          <Button
             navigate="/login"
-          />
+          >Login</Button>
         </div>
       </div>
     </div>
