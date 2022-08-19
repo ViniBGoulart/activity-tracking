@@ -27,4 +27,11 @@ class ProjectController extends Controller
 
         return $project ? array_merge($project->toArray(), ['timers' => []]) : false;
     }
+
+    public function destroy(int $id)
+    {
+        $project = Project::find($id);
+
+        return $project ? $project->delete() : false;
+    }
 }
