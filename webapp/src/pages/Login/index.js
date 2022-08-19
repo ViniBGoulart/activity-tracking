@@ -6,6 +6,8 @@ import api from "../../services/api";
 
 import "../../styles/globals.css";
 
+import Button from '../../components/Button'
+
 export default function Login() {
     const navigate = useNavigate();
     const {
@@ -68,18 +70,14 @@ export default function Login() {
                         </p>
                     </div>
                     <div className="flex items-center justify-between">
-                        <button
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        <Button 
+                            name="Sign In"
                             type="submit"
-                        >
-                            Sign In
-                        </button>
-                        <button
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                            onClick={() => navigate("/register")}
-                        >
-                            Register
-                        </button>
+                        />
+                        <Button 
+                            name="Register"
+                            navigate="/register"
+                        />
                     </div>
                 </form>
             </div>

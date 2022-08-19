@@ -6,6 +6,8 @@ import api from "../../services/api";
 
 import "../../styles/globals.css";
 
+import Button from '../../components/Button'
+
 export default function Register() {
   const {
     register,
@@ -74,23 +76,19 @@ export default function Register() {
               placeholder="Confirm Password"
               {...register("confirmPassword")}
             />
-            <button
+            <Button
+              name="Create Account"
               type="submit"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
-            >
-              Create Account
-            </button>
+            />
           </form>
         </div>
 
-        <div className="text-grey-dark mt-6">
-          Already have an account?
-          <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              onClick={() => navigate('/login')}>
-              Login
-            </button>
-          .
+        <div className="text-grey-dark mt-6 flex justify-between items-center container">
+          <p>Already have an account?</p>
+          <Button 
+            name="Login"
+            navigate="/login"
+          />
         </div>
       </div>
     </div>
