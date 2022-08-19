@@ -1,7 +1,7 @@
 
 # Activity Tracking
 
-A CRUD to registry your activity with a timer to count and control the hours spent made to pratice React and Laravel. 
+A CRUD to registry your activity with a timer to count and control the hours spent. Made to pratice React and Laravel. 
 
 I did this for control hours worked outside the company, because the existing software which does this is in company local
 
