@@ -6,7 +6,8 @@ import api from "../../services/api";
 import "../../styles/globals.css";
 
 import NavBar from "../../components/Navbar";
-import CardProject from "./CardCreateProject"
+import CardCreateProject from "./CardCreateProject"
+import CardProject from "./CardProject";
 
 export default function Home() {
     const navigate = useNavigate();
@@ -52,15 +53,14 @@ export default function Home() {
             },
         })
             .then((res) => {
-                console.log(res)
-                setProject([...projects], res.data);
+                setProject((prevState) => [...prevState, res.data]);
             })
             .catch((err) => {
                 if (err.status && err.status === (401 || 498)) {
                     localStorage.clear();
                     navigate("/login");
                 } else {
-                    alert('Err')
+                    console.log(err)
                 }
             });
     };
@@ -68,10 +68,15 @@ export default function Home() {
     return (
         <React.Fragment>
             <NavBar />
-            <CardProject onInsertProject={onInsertProject} />
+            <CardCreateProject onInsertProject={onInsertProject} />
 
             {projects.map(project => (
-                <div>{project.name}</div>
+                <CardProject
+                    id={project.id}
+                    key={project.id}
+                    name={project.name}
+                    description={project.description}
+                />
             ))}
         </React.Fragment>
     );
