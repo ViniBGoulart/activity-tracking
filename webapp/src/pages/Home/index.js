@@ -6,7 +6,7 @@ import api from "../../services/api";
 
 import "../../styles/globals.css";
 
-import NavBar from "../../components/navbar";
+import NavBar from "../../components/Navbar";
 import CardProject from "./CardProject"
 
 export default function Home() {
@@ -68,9 +68,7 @@ export default function Home() {
     return (
         <React.Fragment>
             <NavBar />
-            <CardProject 
-                onInsertProject={onInsertProject}
-            />
+            <CardProject onInsertProject={onInsertProject} />
         </React.Fragment>
     );
 }
