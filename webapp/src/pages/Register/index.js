@@ -4,8 +4,6 @@ import { useForm } from "react-hook-form";
 
 import api from "../../services/api";
 
-import "../../styles/globals.css";
-
 import Button from '../../components/Button'
 
 export default function Register() {
