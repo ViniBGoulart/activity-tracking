@@ -24,14 +24,17 @@ class TimerController extends Controller
         return $timer->with('project')->find($timer->id);
     }
 
-    public function running()
+    public function running(int $id)
     {
-        return Timer::with('project')->mine()->running()->first() ?? [];
+        return Timer::with('project')->where('project_id', $id)->get() ?? [];
     }
 
-    public function stopRunning()
+    public function stopRunning(int $id, int $timerId)
     {
-        if ($timer = Timer::mine()->running()->first()) {
+        if ($timer = Timer::mine()->running()->where([
+            ['project_id', '=', $id],
+            ['id', '=', $timerId]
+        ])->first()) {
             $timer->update(['stopped_at' => new Carbon]);
         }
 
