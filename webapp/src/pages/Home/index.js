@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import api from "../../services/api";
 
 import NavBar from "../../components/Navbar";
-import CardCreateProject from "./CardCreateProject"
+import CardCreateProject from "./CardCreateProject";
 import CardProject from "./CardProject";
 
 export default function Home() {
@@ -12,6 +12,48 @@ export default function Home() {
 
     const [projects, setProject] = useState([]);
     const [token] = useState(localStorage.getItem("token"));
+
+    const onInsertProject = (data) => {
+        api.post("/api/auth/projects", data, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((res) => {
+                setProject((prevState) => [...prevState, res.data]);
+            })
+            .catch((err) => {
+                if (err.status && err.status === (401 || 498)) {
+                    localStorage.clear();
+                    navigate("/login");
+                } else {
+                    console.log(err);
+                }
+            });
+    };
+
+    const onDeleteProject = (data) => {
+        api.delete(`/api/auth/projects/${data.id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((res) => {
+                setProject((prevState) =>
+                    prevState.filter((obj) => {
+                        return obj.id !== data.id;
+                    })
+                );
+            })
+            .catch((err) => {
+                if (err.status && err.status === (401 || 498)) {
+                    localStorage.clear();
+                    navigate("/login");
+                } else {
+                    console.log(err);
+                }
+            });
+    };
 
     useEffect(() => {
         if (![token]) {
@@ -36,7 +78,7 @@ export default function Home() {
                         localStorage.clear();
                         navigate("/login");
                     } else {
-                        alert("Error");
+                        console.log(err);
                     }
                 });
         }
@@ -44,51 +86,12 @@ export default function Home() {
         fetchData();
     }, [token]);
 
-    const onInsertProject = data => {
-        api.post("/api/auth/projects", data, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        })
-            .then((res) => {
-                setProject((prevState) => [...prevState, res.data]);
-            })
-            .catch((err) => {
-                if (err.status && err.status === (401 || 498)) {
-                    localStorage.clear();
-                    navigate("/login");
-                } else {
-                    console.log(err)
-                }
-            });
-    };
-
-    const onDeleteProject = data => {
-        api.delete(`/api/auth/projects/${data.id}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        }).then(res => {
-            setProject((prevState) => prevState.filter(obj => {
-                return obj.id !== data.id
-            }));
-        })
-        .catch(err => {
-            if (err.status && err.status === (401 || 498)) {
-                localStorage.clear();
-                navigate("/login");
-            } else {
-                console.log(err)
-            }
-        })
-    };
-
     return (
         <React.Fragment>
             <NavBar />
             <CardCreateProject onInsertProject={onInsertProject} />
 
-            {projects.map(project => (
+            {projects.map((project) => (
                 <CardProject
                     id={project.id}
                     key={project.id}
