@@ -1,32 +1,105 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-import api from '../../../services/api'
+import api from "../../../services/api";
 
-import Button from '../../../components/Button';
+import Button from "../../../components/Button";
 import CardContainer from "../../../components/CardContainer";
+import CardCreateTimer from "./CardCreateTimer";
+import CardTimer from "./CardTimer";
 
 export default function CardProject(props) {
-    const handleSubmit = async (props) => {
-        await props.onDeleteProject({
-            "id": props.id
+    const navigate = useNavigate();
+
+    const [token] = useState(localStorage.getItem("token"));
+    const [timers, setTimer] = useState([]);
+
+    const onInsertTimer = (data) => {
+        api.post(`/api/auth/projects/${props.id}/timers`, data, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
         })
-    }
+            .then((res) => {
+                setTimer((prevState) => [...prevState, res.data]);
+            })
+            .catch((err) => {
+                if (err.status && err.status === (401 || 498)) {
+                    localStorage.clear();
+                    navigate("/login");
+                } else {
+                    console.log(err);
+                }
+            });
+    };
+
+    const handleDeleteProject = async (props) => {
+        await props.onDeleteProject({
+            id: props.id,
+        });
+    };
+
+    useEffect(() => {
+        if (![token]) {
+            localStorage.clear();
+            navigate("/login");
+        }
+
+        async function fetchData() {
+            api.get(`/api/auth/project/${props.id}/timers/active`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+                .then((res) => {
+                    setTimer(res.data);
+                })
+                .catch((err) => {
+                    if (
+                        err.request.status &&
+                        err.request.status === (401 || 498)
+                    ) {
+                        localStorage.clear();
+                        navigate("/login");
+                    } else {
+                        console.log(err);
+                    }
+                });
+        }
+
+        fetchData();
+    }, [token]);
 
     return (
         <CardContainer>
             <div className="flex-col justify-around">
-                <div id="cardHeader" className="flex justify-between items-center">
+                <div
+                    id="cardHeader"
+                    className="flex justify-between items-center"
+                >
                     <div>
-                        <strong>{props.name}</strong>
+                        <strong className="text-xl">{props.name}</strong>
                     </div>
-                    <Button
-                        onClick={() => handleSubmit(props)}
-                    >X</Button>
+                    <Button onClick={() => handleDeleteProject(props)}>
+                        X
+                    </Button>
                 </div>
-                <div id="cardBody" className="my-2">
-                    <small>{props.description}</small>
+                <div id="cardBody">
+                    <div className="mb-4">
+                        <small>{props.description}</small>
+                    </div>
+                    {timers.map((timer) => (
+                        <CardTimer
+                            id={timer.id}
+                            key={timer.id}
+                            name={timer.name}
+                            description={timer.description}
+                        />
+                    ))}
+
+                    <CardCreateTimer onInsertTimer={onInsertTimer} />
                 </div>
             </div>
         </CardContainer>
-    )
+    );
 }
