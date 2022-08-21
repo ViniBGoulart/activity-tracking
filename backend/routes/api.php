@@ -29,7 +29,7 @@ Route::group(['middleware' => 'jwt.verify', 'prefix' => 'auth'], function ($rout
     Route::post('/projects', [ProjectController::class, 'store']);
     Route::delete('/projects/{id}', [ProjectController::class, 'destroy']);
     Route::post('/projects/{id}/timers/{timerId}/stop', [TimerController::class, 'stopRunning']);
-    Route::post('/projects/{id}/timers', [TimerController::class, 'store']);
+    Route::post('/projects/{id}/timers', [TimerController::class, 'store'])->name('timers.store');
     Route::get('/project/{id}/timers/active', [TimerController::class, 'running']);
 });
 
