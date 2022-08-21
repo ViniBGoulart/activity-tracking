@@ -17,6 +17,7 @@ class TimerController extends Controller
             ->timers()
             ->save(new Timer([
                 'name' => $data['name'],
+                'description' => $data['description'],
                 'user_id' => auth()->user()->id,
                 'started_at' => new Carbon,
             ]));
