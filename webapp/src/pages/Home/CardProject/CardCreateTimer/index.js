@@ -14,7 +14,7 @@ export default function CardCreateTimer({ onInsertTimer }) {
     };
 
     return (
-        <React.Fragment>
+        <>
             <p className="text-base pb-2 font-semibold">Create Timer</p>
             <div className="mb-3">
                 <input
@@ -38,6 +38,6 @@ export default function CardCreateTimer({ onInsertTimer }) {
             <div className="flex items-center justify-between">
                 <Button onClick={handleSubmit}>Send</Button>
             </div>
-        </React.Fragment>
+        </>
     );
 }
