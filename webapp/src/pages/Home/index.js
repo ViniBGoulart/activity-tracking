@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import api from "../../services/api";
 
-import NavBar from "../../components/Navbar";
+import NavBar from "../../components/navbar";
 import CardCreateProject from "./CardCreateProject";
 import CardProject from "./CardProject";
 
