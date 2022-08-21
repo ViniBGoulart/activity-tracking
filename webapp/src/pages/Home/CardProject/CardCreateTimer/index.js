@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 import Button from "../../../../components/Button";
-import CardContainer from "../../../../components/CardContainer";
 
 export default function CardCreateTimer({ onInsertTimer }) {
     const [name, setName] = useState("");
