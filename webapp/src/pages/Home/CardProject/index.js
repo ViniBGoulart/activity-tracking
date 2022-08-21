@@ -21,7 +21,11 @@ export default function CardProject(props) {
             },
         })
             .then((res) => {
-                setTimer((prevState) => [...prevState, res.data]);
+                if(res.data.status === false) {
+                    alert(res.data.message);
+                } else {
+                    setTimer((prevState) => [...prevState, res.data]);
+                }
             })
             .catch((err) => {
                 if (err.status && err.status === (401 || 498)) {
@@ -94,6 +98,8 @@ export default function CardProject(props) {
                             key={timer.id}
                             name={timer.name}
                             description={timer.description}
+                            started_at={timer.started_at}
+                            stopped_at={timer.stopped_at}
                         />
                     ))}
 
