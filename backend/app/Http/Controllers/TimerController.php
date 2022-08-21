@@ -6,17 +6,24 @@ use App\Models\Project;
 use App\Models\Timer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Services\ResponseService;
 
 class TimerController extends Controller
 {
     public function store(Request $request, int $id)
     {
-        $data = $request->validate(['name' => 'required|between:3,100', 'description' => 'between:2,200']);
+        if ($timer = Timer::mine()->running()->where([
+            ['project_id', '=', $id],
+        ])->first()) {
+            return ResponseService::default(409, $request);
+        }
 
+        $data = $request->validate(['name' => 'required|between:3,100', 'description' => 'between:2,200']);
         $timer = Project::mine()->findOrFail($id)
             ->timers()
             ->save(new Timer([
                 'name' => $data['name'],
+                'description' => $data['description'],
                 'user_id' => auth()->user()->id,
                 'started_at' => new Carbon,
             ]));

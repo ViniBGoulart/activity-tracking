@@ -1,21 +1,20 @@
 import React, { useState } from "react";
 
 import Button from "../../../../components/Button";
-import CardContainer from "../../../../components/CardContainer";
 
-export default function CardCreateTimer({ onInsertTimer }) {
+export default function CardCreateTimer({ handleInsertTimer }) {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
 
-    const handleSubmit = async () => {
-        await onInsertTimer({
+    const onInsertTimer = async () => {
+        await handleInsertTimer({
             name: name,
             description: description,
         });
     };
 
     return (
-        <React.Fragment>
+        <>
             <p className="text-base pb-2 font-semibold">Create Timer</p>
             <div className="mb-3">
                 <input
@@ -37,8 +36,8 @@ export default function CardCreateTimer({ onInsertTimer }) {
                 />
             </div>
             <div className="flex items-center justify-between">
-                <Button onClick={handleSubmit}>Send</Button>
+                <Button onClick={onInsertTimer}>Send</Button>
             </div>
-        </React.Fragment>
+        </>
     );
 }

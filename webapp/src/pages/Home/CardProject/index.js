@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import {useNavigate} from "react-router-dom";
 
 import api from "../../../services/api";
 
@@ -14,28 +14,56 @@ export default function CardProject(props) {
     const [token] = useState(localStorage.getItem("token"));
     const [timers, setTimer] = useState([]);
 
-    const onInsertTimer = (data) => {
+    const handleInsertTimer = (data) => {
         api.post(`/api/auth/projects/${props.id}/timers`, data, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
-        })
-            .then((res) => {
+        }).then((res) => {
+            if (res.data.status === false) {
+                alert(res.data.message);
+            } else {
                 setTimer((prevState) => [...prevState, res.data]);
-            })
-            .catch((err) => {
-                if (err.status && err.status === (401 || 498)) {
-                    localStorage.clear();
-                    navigate("/login");
-                } else {
-                    console.log(err);
-                }
-            });
+            }
+        }).catch((err) => {
+            if (err.status && err.status === (401 || 498)) {
+                localStorage.clear();
+                navigate("/login");
+            } else {
+                console.log(err);
+            }
+        });
     };
 
-    const handleDeleteProject = async (props) => {
-        await props.onDeleteProject({
-            id: props.id,
+    const handleEndTimer = (data) => {
+        console.log(data);
+        api.post(`/api/auth/projects/${props.id}/timers/${data.id}/stop`, data, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }).then((res) => {
+            if (res.data.status === false) {
+                alert(res.data.message);
+            } else {
+                setTimer((prevState) =>
+                    prevState.filter((obj) => {
+                        return obj;
+                    })
+                );
+            }
+        }).catch((err) => {
+            if (err.status && err.status === (401 || 498)) {
+                localStorage.clear();
+                navigate("/login");
+            } else {
+                console.log(err);
+            }
+        });
+    }
+
+    const onDeleteProject = async (data) => {
+        await data.handleDeleteProject({
+            id: data.id,
         });
     };
 
@@ -50,21 +78,19 @@ export default function CardProject(props) {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
-            })
-                .then((res) => {
-                    setTimer(res.data);
-                })
-                .catch((err) => {
-                    if (
-                        err.request.status &&
-                        err.request.status === (401 || 498)
-                    ) {
-                        localStorage.clear();
-                        navigate("/login");
-                    } else {
-                        console.log(err);
-                    }
-                });
+            }).then((res) => {
+                setTimer(res.data);
+            }).catch((err) => {
+                if (
+                    err.request.status &&
+                    err.request.status === (401 || 498)
+                ) {
+                    localStorage.clear();
+                    navigate("/login");
+                } else {
+                    console.log(err);
+                }
+            });
         }
 
         fetchData();
@@ -80,7 +106,7 @@ export default function CardProject(props) {
                     <div>
                         <strong className="text-xl">{props.name}</strong>
                     </div>
-                    <Button onClick={() => handleDeleteProject(props)}>
+                    <Button onClick={() => onDeleteProject(props)}>
                         X
                     </Button>
                 </div>
@@ -94,10 +120,13 @@ export default function CardProject(props) {
                             key={timer.id}
                             name={timer.name}
                             description={timer.description}
+                            started_at={timer.started_at}
+                            stopped_at={timer.stopped_at}
+                            handleEndTimer={handleEndTimer}
                         />
                     ))}
 
-                    <CardCreateTimer onInsertTimer={onInsertTimer} />
+                    <CardCreateTimer handleInsertTimer={handleInsertTimer}/>
                 </div>
             </div>
         </CardContainer>
