@@ -14,7 +14,7 @@ export default function CardProject(props) {
     const [token] = useState(localStorage.getItem("token"));
     const [timers, setTimer] = useState([]);
 
-    const onInsertTimer = (data) => {
+    const handleInsertTimer = (data) => {
         api.post(`/api/auth/projects/${props.id}/timers`, data, {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -35,7 +35,7 @@ export default function CardProject(props) {
         });
     };
 
-    const onEndTimer = (data) => {
+    const handleEndTimer = (data) => {
         console.log(data);
         api.post(`/api/auth/projects/${props.id}/timers/${data.id}/stop`, data, {
             headers: {
@@ -61,8 +61,8 @@ export default function CardProject(props) {
         });
     }
 
-    const handleDeleteProject = async (data) => {
-        await data.onDeleteProject({
+    const onDeleteProject = async (data) => {
+        await data.handleDeleteProject({
             id: data.id,
         });
     };
@@ -106,7 +106,7 @@ export default function CardProject(props) {
                     <div>
                         <strong className="text-xl">{props.name}</strong>
                     </div>
-                    <Button onClick={() => handleDeleteProject(props)}>
+                    <Button onClick={() => onDeleteProject(props)}>
                         X
                     </Button>
                 </div>
@@ -122,11 +122,11 @@ export default function CardProject(props) {
                             description={timer.description}
                             started_at={timer.started_at}
                             stopped_at={timer.stopped_at}
-                            onEndTimer={onEndTimer}
+                            handleEndTimer={handleEndTimer}
                         />
                     ))}
 
-                    <CardCreateTimer onInsertTimer={onInsertTimer}/>
+                    <CardCreateTimer handleInsertTimer={handleInsertTimer}/>
                 </div>
             </div>
         </CardContainer>

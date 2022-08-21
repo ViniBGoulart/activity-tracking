@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import api from "../../services/api";
 
-import NavBar from "../../components/navbar";
+import NavBar from "../../components/Navbar";
 import CardCreateProject from "./CardCreateProject";
 import CardProject from "./CardProject";
 
@@ -13,7 +13,7 @@ export default function Home() {
     const [projects, setProject] = useState([]);
     const [token] = useState(localStorage.getItem("token"));
 
-    const onInsertProject = (data) => {
+    const handleInsertProject = (data) => {
         api.post("/api/auth/projects", data, {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -32,7 +32,7 @@ export default function Home() {
             });
     };
 
-    const onDeleteProject = (data) => {
+    const handleDeleteProject = (data) => {
         api.delete(`/api/auth/projects/${data.id}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -89,7 +89,7 @@ export default function Home() {
     return (
         <React.Fragment>
             <NavBar />
-            <CardCreateProject onInsertProject={onInsertProject} />
+            <CardCreateProject handleInsertProject={handleInsertProject} />
 
             {projects.map((project) => (
                 <CardProject
@@ -97,7 +97,7 @@ export default function Home() {
                     key={project.id}
                     name={project.name}
                     description={project.description}
-                    onDeleteProject={onDeleteProject}
+                    handleDeleteProject={handleDeleteProject}
                 />
             ))}
         </React.Fragment>

@@ -3,12 +3,12 @@ import React, { useState } from "react";
 import Button from '../../../components/Button'
 import CardContainer from "../../../components/CardContainer";
 
-export default function CardCreateProject({ onInsertProject }) {
+export default function CardCreateProject({ handleInsertProject }) {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
 
-    const handleSubmit = async () => {
-        await onInsertProject({
+    const onInsertProject = async () => {
+        await handleInsertProject({
             "name": name,
             "description": description
         })
@@ -44,7 +44,7 @@ export default function CardCreateProject({ onInsertProject }) {
                 </div>
                 <div className="flex items-center justify-between">
                     <Button
-                        onClick={handleSubmit}
+                        onClick={onInsertProject}
                     >Send</Button>
                 </div>
             </CardContainer>

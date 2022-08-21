@@ -2,12 +2,12 @@ import React, { useState } from "react";
 
 import Button from "../../../../components/Button";
 
-export default function CardCreateTimer({ onInsertTimer }) {
+export default function CardCreateTimer({ handleInsertTimer }) {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
 
-    const handleSubmit = async () => {
-        await onInsertTimer({
+    const onInsertTimer = async () => {
+        await handleInsertTimer({
             name: name,
             description: description,
         });
@@ -36,7 +36,7 @@ export default function CardCreateTimer({ onInsertTimer }) {
                 />
             </div>
             <div className="flex items-center justify-between">
-                <Button onClick={handleSubmit}>Send</Button>
+                <Button onClick={onInsertTimer}>Send</Button>
             </div>
         </>
     );

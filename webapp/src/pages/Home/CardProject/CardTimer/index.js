@@ -3,8 +3,8 @@ import React from "react";
 import Button from "../../../../components/Button";
 
 export default function CardTimer(props) {
-    const handleEndTimer = async (data) => {
-        await data.onEndTimer({
+    const onEndTimer = async (data) => {
+        await data.handleEndTimer({
             id: data.id,
         });
     };
@@ -18,7 +18,7 @@ export default function CardTimer(props) {
             {props.started_at}
             <br />
             {props.stopped_at}
-            <Button type="submit" onClick={() => handleEndTimer(props)}>
+            <Button type="submit" onClick={() => onEndTimer(props)}>
                 Stop
             </Button>
         </>
