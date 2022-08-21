@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from "react";
-import {useNavigate} from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import api from "../../../services/api";
 
@@ -19,47 +19,51 @@ export default function CardProject(props) {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
-        }).then((res) => {
-            if (res.data.status === false) {
-                alert(res.data.message);
-            } else {
-                setTimer((prevState) => [...prevState, res.data]);
-            }
-        }).catch((err) => {
-            if (err.status && err.status === (401 || 498)) {
-                localStorage.clear();
-                navigate("/login");
-            } else {
-                console.log(err);
-            }
-        });
+        })
+            .then((res) => {
+                if (res.data.status === false) {
+                    alert(res.data.message);
+                } else {
+                    setTimer((prevState) => [...prevState, res.data]);
+                }
+            })
+            .catch((err) => {
+                if (err.status && err.status === (401 || 498)) {
+                    localStorage.clear();
+                    navigate("/login");
+                } else {
+                    console.log(err);
+                }
+            });
     };
 
     const handleEndTimer = (data) => {
-        console.log(data);
-        api.post(`/api/auth/projects/${props.id}/timers/${data.id}/stop`, data, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        }).then((res) => {
-            if (res.data.status === false) {
-                alert(res.data.message);
-            } else {
-                setTimer((prevState) =>
-                    prevState.filter((obj) => {
-                        return obj;
-                    })
-                );
+        api.post(
+            `/api/auth/projects/${props.id}/timers/${data.id}/stop`,
+            data,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
             }
-        }).catch((err) => {
-            if (err.status && err.status === (401 || 498)) {
-                localStorage.clear();
-                navigate("/login");
-            } else {
-                console.log(err);
-            }
-        });
-    }
+        )
+            .then((res) => {
+                setTimer((prevState) => [
+                    ...prevState.filter((obj) => {
+                        return obj.id !== data.id;
+                    }),
+                    res.data,
+                ]);
+            })
+            .catch((err) => {
+                if (err.status && err.status === (401 || 498)) {
+                    localStorage.clear();
+                    navigate("/login");
+                } else {
+                    console.log(err);
+                }
+            });
+    };
 
     const onDeleteProject = async (data) => {
         await data.handleDeleteProject({
@@ -78,19 +82,21 @@ export default function CardProject(props) {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
-            }).then((res) => {
-                setTimer(res.data);
-            }).catch((err) => {
-                if (
-                    err.request.status &&
-                    err.request.status === (401 || 498)
-                ) {
-                    localStorage.clear();
-                    navigate("/login");
-                } else {
-                    console.log(err);
-                }
-            });
+            })
+                .then((res) => {
+                    setTimer(res.data);
+                })
+                .catch((err) => {
+                    if (
+                        err.request.status &&
+                        err.request.status === (401 || 498)
+                    ) {
+                        localStorage.clear();
+                        navigate("/login");
+                    } else {
+                        console.log(err);
+                    }
+                });
         }
 
         fetchData();
@@ -106,10 +112,9 @@ export default function CardProject(props) {
                     <div>
                         <strong className="text-xl">{props.name}</strong>
                     </div>
-                    <Button onClick={() => onDeleteProject(props)}>
-                        X
-                    </Button>
+                    <Button onClick={() => onDeleteProject(props)}>X</Button>
                 </div>
+
                 <div id="cardBody">
                     <div className="mb-4">
                         <small>{props.description}</small>
@@ -126,7 +131,7 @@ export default function CardProject(props) {
                         />
                     ))}
 
-                    <CardCreateTimer handleInsertTimer={handleInsertTimer}/>
+                    <CardCreateTimer handleInsertTimer={handleInsertTimer} />
                 </div>
             </div>
         </CardContainer>
