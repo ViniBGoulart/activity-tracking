@@ -12,7 +12,7 @@ class TimerController extends Controller
 {
     public function store(Request $request, int $id)
     {
-        if ($timer = Timer::mine()->running()->where([
+        if (Timer::mine()->running()->where([
             ['project_id', '=', $id],
         ])->first()) {
             return ResponseService::default(409, $request);
