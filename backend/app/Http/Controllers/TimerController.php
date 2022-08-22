@@ -2,49 +2,59 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Project;
 use App\Models\Timer;
+use App\Transformers\Timer\TimerResource;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
+use App\Http\Request\Timer\StoreTimer;
 use App\Services\ResponseService;
+use Illuminate\Support\Arr;
 
 class TimerController extends Controller
 {
-    public function store(Request $request, int $id)
+    private $timer;
+
+    public function __construct(Timer $timer)
     {
-        if (Timer::mine()->running()->where([
+        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->timer = $timer;
+    }
+
+    public function store(StoreTimer $request, int $id)
+    {
+        if ($this->timer::mine()->running()->where([
             ['project_id', '=', $id],
         ])->first()) {
-            return ResponseService::default(409, $request);
+            //TODO: Timer must not be created if exists other running
         }
 
-        $data = $request->validate(['name' => 'required|between:3,100', 'description' => 'between:2,200']);
-        $timer = Project::mine()->findOrFail($id)
-            ->timers()
-            ->save(new Timer([
-                'name' => $data['name'],
-                'description' => $data['description'],
-                'user_id' => auth()->user()->id,
-                'started_at' => Carbon::now()->toDateTimeString(),
-            ]));
+        try {
+            $data = $this->timer->store($request, $id);
+        } catch (\Throwable|\Exception $e) {
+            return ResponseService::exception($e);
+        }
 
-        return $timer->with('project')->find($timer->id);
+        return new TimerResource($data, ['type' => 'store', 'route' => 'timer.store']);
     }
 
     public function running(int $id)
     {
-        return Timer::with('project')->where('project_id', $id)->get() ?? [];
+        try {
+            $data = Arr::first(($this->timer->running($id)));
+        } catch (\Throwable|\Exception $e) {
+            return ResponseService::exception($e);
+        }
+
+        return new TimerResource($data, ['type' => 'show', 'route' => 'timer.show']);
     }
 
     public function stopRunning(int $id, int $timerId)
     {
-        if ($timer = Timer::mine()->running()->where([
-            ['project_id', '=', $id],
-            ['id', '=', $timerId]
-        ])->first()) {
-            $timer->update(['stopped_at' => Carbon::now()->toDateTimeString()]);
+        try {
+            $data = $this->timer->stopRunning($id, $timerId);
+        } catch (\Throwable|\Exception $e) {
+            return ResponseService::exception($e);
         }
 
-        return $timer;
+        return new TimerResource($data, ['type' => 'stop', 'route' => 'timer.stop']);
     }
 }
