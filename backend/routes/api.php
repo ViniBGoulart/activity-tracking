@@ -28,9 +28,9 @@ Route::group(['middleware' => 'jwt.verify', 'prefix' => 'auth'], function ($rout
     Route::get('/projects', [ProjectController::class, 'index'])->name('project.index');
     Route::post('/projects', [ProjectController::class, 'store'])->name('project.store');
     Route::delete('/projects/{id}', [ProjectController::class, 'destroy'])->name('project.destroy');
-    Route::post('/projects/{id}/timers/{timerId}/stop', [TimerController::class, 'stopRunning']);
-    Route::post('/projects/{id}/timers', [TimerController::class, 'store'])->name('timers.store');
-    Route::get('/project/{id}/timers/active', [TimerController::class, 'running']);
+    Route::post('/projects/{id}/timers/{timerId}/stop', [TimerController::class, 'stopRunning'])->name('timer.stop');
+    Route::post('/projects/{id}/timers', [TimerController::class, 'store'])->name('timer.store');
+    Route::get('/project/{id}/timers/active', [TimerController::class, 'running'])->name('timer.show');
 });
 
 //TODO: admin role that can register & delete users
