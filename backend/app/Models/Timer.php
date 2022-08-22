@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,6 +21,37 @@ class Timer extends Model
      * {@inheritDoc}
      */
     protected $with = ['user'];
+
+    public function store($request, int $id)
+    {
+        $timer = Project::mine()->findOrFail($id)
+            ->timers()
+            ->save(new Timer([
+                'name' => $request['name'],
+                'description' => $request['description'],
+                'user_id' => auth()->user()->id,
+                'started_at' => Carbon::now()->toDateTimeString(),
+            ]));
+
+        return $timer->with('project')->find($timer->id);
+    }
+
+    public function running(int $id)
+    {
+        return Timer::with('project')->where('project_id', $id)->get() ?? [];
+    }
+
+    public function stopRunning(int $id, int $timerId)
+    {
+        if ($timer = Timer::mine()->running()->where([
+            ['project_id', '=', $id],
+            ['id', '=', $timerId]
+        ])->first()) {
+            $timer->update(['stopped_at' => Carbon::now()->toDateTimeString()]);
+        }
+
+        return $timer;
+    }
 
     /**
      * Get the related user.
