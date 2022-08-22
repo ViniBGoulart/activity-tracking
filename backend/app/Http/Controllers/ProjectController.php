@@ -2,36 +2,46 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Request\Project\StoreProject;
 use App\Models\Project;
-use Illuminate\Http\Request;
+use App\Services\ResponseService;
+use App\Transformers\Project\ProjectResource;
+use App\Transformers\Project\ProjectResourceCollection;
 
 class ProjectController extends Controller
 {
-    public function __construct()
+    private $project;
+
+    public function __construct(Project $project)
     {
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->project = $project;
     }
 
     public function index()
     {
-        return Project::mine()->with('timers')->get()->toArray();
+        return new ProjectResourceCollection($this->project->index());
     }
 
-    public function store(Request $request)
+    public function store(StoreProject $request)
     {
-        $data = $request->validate(['name' => 'required|between:2,50', 'description' => 'between:2,500']);
+        try {
+            $data = $this->project->store($request->all());
+        } catch (\Throwable|\Exception $e) {
+            return ResponseService::exception($e);
+        }
 
-        $data = array_merge($data, ['user_id' => auth()->user()->id]);
-
-        $project = Project::create($data);
-
-        return $project ? array_merge($project->toArray(), ['timers' => []]) : false;
+        return new ProjectResource($data, ['type' => 'store', 'route' => 'project.store']);
     }
 
     public function destroy(int $id)
     {
-        $project = Project::find($id);
+        try {
+            $data = $this->project->destroyProject($id);
+        } catch (\Throwable|\Exception $e) {
+            return ResponseService::exception($e);
+        }
 
-        return $project ? $project->delete() : false;
+        return new ProjectResource($data, ['type' => 'destroy', 'route' => 'project.destroy']);
     }
 }

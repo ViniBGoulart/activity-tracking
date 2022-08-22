@@ -20,15 +20,12 @@ export default function Home() {
             },
         })
             .then((res) => {
-                setProject((prevState) => [...prevState, res.data]);
+                if (res.data.status === true) {
+                    setProject((prevState) => [...prevState, res.data.data]);
+                }
             })
             .catch((err) => {
-                if (err.status && err.status === (401 || 498)) {
-                    localStorage.clear();
-                    navigate("/login");
-                } else {
-                    console.log(err);
-                }
+                console.log(err);
             });
     };
 
@@ -39,11 +36,13 @@ export default function Home() {
             },
         })
             .then((res) => {
-                setProject((prevState) =>
-                    prevState.filter((obj) => {
-                        return obj.id !== data.id;
-                    })
-                );
+                if (res.data.status === true) {
+                    setProject((prevState) =>
+                        prevState.filter((obj) => {
+                            return obj.id !== data.id;
+                        })
+                    );
+                }
             })
             .catch((err) => {
                 if (err.status && err.status === (401 || 498)) {
@@ -68,7 +67,9 @@ export default function Home() {
                 },
             })
                 .then((res) => {
-                    setProject(res.data);
+                    if (res.data.status === true) {
+                        setProject(res.data.data);
+                    }
                 })
                 .catch((err) => {
                     if (

@@ -19,6 +19,30 @@ class Project extends Model
      */
     protected $with = ['user'];
 
+    public function index()
+    {
+        return Project::mine()->with('timers')->get()->toArray();
+    }
+
+    public function store($fields)
+    {
+        $project = Project::create( array_merge($fields, ['user_id' => auth()->user()->id]));
+
+        return $project ? array_merge($project->toArray(), ['timers' => [], 'status' => 1]) : false;
+    }
+
+    public function destroyProject($id)
+    {
+        if(Project::find($id)) {
+            $project = Project::find($id);
+            Project::find($id)->delete();
+
+            return $project;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * Get associated user.
      *
