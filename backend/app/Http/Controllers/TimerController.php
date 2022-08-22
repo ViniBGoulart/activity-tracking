@@ -25,7 +25,7 @@ class TimerController extends Controller
                 'name' => $data['name'],
                 'description' => $data['description'],
                 'user_id' => auth()->user()->id,
-                'started_at' => new Carbon,
+                'started_at' => Carbon::now()->toDateTimeString(),
             ]));
 
         return $timer->with('project')->find($timer->id);
@@ -42,7 +42,7 @@ class TimerController extends Controller
             ['project_id', '=', $id],
             ['id', '=', $timerId]
         ])->first()) {
-            $timer->update(['stopped_at' => new Carbon]);
+            $timer->update(['stopped_at' => Carbon::now()->toDateTimeString()]);
         }
 
         return $timer;
