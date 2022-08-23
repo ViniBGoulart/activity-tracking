@@ -6,7 +6,9 @@ use App\Models\Timer;
 use App\Transformers\Timer\TimerResource;
 use App\Http\Request\Timer\StoreTimer;
 use App\Services\ResponseService;
-use Illuminate\Support\Arr;
+use App\Transformers\Timer\TimerResourceCollection;
+use App\Transformers\Timer\TimerRunningResourceCollection;
+use App\Transformers\Timer\TimerTodayResourceCollection;
 
 class TimerController extends Controller
 {
@@ -16,6 +18,11 @@ class TimerController extends Controller
     {
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
         $this->timer = $timer;
+    }
+
+    public function index($id)
+    {
+        return new TimerResourceCollection($this->timer->index($id));
     }
 
     public function store(StoreTimer $request, int $id)
@@ -35,15 +42,14 @@ class TimerController extends Controller
         return new TimerResource($data, ['type' => 'store', 'route' => 'timer.store']);
     }
 
+    public function today($id)
+    {
+        return new TimerTodayResourceCollection($this->timer->today($id));
+    }
+
     public function running(int $id)
     {
-        try {
-            $data = $this->timer->running($id);
-        } catch (\Throwable|\Exception $e) {
-            return ResponseService::exception($e);
-        }
-
-        return new TimerResource($data, ['type' => 'show', 'route' => 'timer.show']);
+        return new TimerRunningResourceCollection($this->timer->running($id), $id);
     }
 
     public function stopRunning(int $id, int $timerId)

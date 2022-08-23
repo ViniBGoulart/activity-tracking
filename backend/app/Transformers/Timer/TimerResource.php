@@ -27,10 +27,10 @@ class TimerResource extends JsonResource
             'stopped_at' => $this->resource['stopped_at']
         ];
     }
-    
+
     public function with($request)
     {
-        return ResponseService::default($this->config, $this->resource['project_id']);
+        return ResponseService::default($this->config, $this->resource['project_id'], $this->resource['id']);
     }
 
     public function withResponse($request, $response)
