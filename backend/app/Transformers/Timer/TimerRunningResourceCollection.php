@@ -29,7 +29,7 @@ class TimerRunningResourceCollection extends ResourceCollection
         return [
             'status' => true,
             'msg'    => 'Listing Data',
-            'url'    => route('timer.show', Arr::first($this->collection)->project_id)
+            'url'    => route('timer.running', Arr::first($this->collection)->project_id)
         ];
     }
 
