@@ -21,19 +21,12 @@ export default function CardProject(props) {
             },
         })
             .then((res) => {
-                if (res.data.status === false) {
-                    alert(res.data.message);
-                } else {
-                    setTimer((prevState) => [...prevState, res.data]);
+                if (res.data.status === true) {
+                    setTimer((prevState) => [...prevState, res.data.data]);
                 }
             })
             .catch((err) => {
-                if (err.status && err.status === (401 || 498)) {
-                    localStorage.clear();
-                    navigate("/login");
-                } else {
-                    console.log(err);
-                }
+                console.log(err);
             });
     };
 
@@ -52,16 +45,11 @@ export default function CardProject(props) {
                     ...prevState.filter((obj) => {
                         return obj.id !== data.id;
                     }),
-                    res.data,
+                    res.data.data,
                 ]);
             })
             .catch((err) => {
-                if (err.status && err.status === (401 || 498)) {
-                    localStorage.clear();
-                    navigate("/login");
-                } else {
-                    console.log(err);
-                }
+                console.log(err);
             });
     };
 
@@ -84,18 +72,10 @@ export default function CardProject(props) {
                 },
             })
                 .then((res) => {
-                    setTimer(res.data);
+                    setTimer(res.data.data);
                 })
                 .catch((err) => {
-                    if (
-                        err.request.status &&
-                        err.request.status === (401 || 498)
-                    ) {
-                        localStorage.clear();
-                        navigate("/login");
-                    } else {
-                        console.log(err);
-                    }
+                    console.log(err);
                 });
         }
 
