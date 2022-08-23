@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Timer;
 use App\Transformers\Timer\TimerResource;
-use Carbon\Carbon;
 use App\Http\Request\Timer\StoreTimer;
 use App\Services\ResponseService;
 use Illuminate\Support\Arr;
@@ -39,7 +38,7 @@ class TimerController extends Controller
     public function running(int $id)
     {
         try {
-            $data = Arr::first(($this->timer->running($id)));
+            $data = $this->timer->running($id);
         } catch (\Throwable|\Exception $e) {
             return ResponseService::exception($e);
         }
