@@ -22,6 +22,11 @@ class Timer extends Model
      */
     protected $with = ['user'];
 
+    public function index($id)
+    {
+        return Timer::with('project')->where('project_id', $id)->get() ?? [];
+    }
+
     public function store($request, int $id)
     {
         $timer = Project::mine()->findOrFail($id)
@@ -34,6 +39,11 @@ class Timer extends Model
             ]));
 
         return $timer->with('project')->find($timer->id);
+    }
+
+    public function today($id)
+    {
+        return Timer::with('project')->where('project_id', $id)->whereDate('created_at', Carbon::today())->get();
     }
 
     public function running(int $id)
