@@ -66,7 +66,7 @@ export default function CardProject(props) {
         }
 
         async function fetchData() {
-            api.get(`/api/auth/project/${props.id}/timers/active`, {
+            api.get(`/api/auth/projects/${props.id}/timers/today`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
