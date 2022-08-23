@@ -48,6 +48,13 @@ class ResponseService
                     'url' => $secondId != null ? route($route, $id, $secondId) : ($id != null ? route($route, $id) : route($route))
                 ];
                 break;
+            case 'stop':
+                return [
+                    'status' => true,
+                    'msg' => 'Successful stopped',
+                    'url' => $id != null ? route($route, $id) : route($route)
+                ];
+                break;
         }
     }
 
