@@ -29,7 +29,7 @@ class TimerTodayResourceCollection extends ResourceCollection
         return [
             'status' => true,
             'msg'    => 'Listing Data',
-            'url'    => route('timer.index', Arr::first($this->collection)->project_id)
+            'url'    => $request->getRequestUri()
         ];
     }
 
