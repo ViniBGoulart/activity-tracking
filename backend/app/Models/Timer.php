@@ -38,7 +38,7 @@ class Timer extends Model
 
     public function running(int $id)
     {
-        return Timer::with('project')->where('project_id', $id)->get() ?? [];
+        return Timer::with('project')->where('project_id', $id)->running()->get() ?? [];
     }
 
     public function stopRunning(int $id, int $timerId)
