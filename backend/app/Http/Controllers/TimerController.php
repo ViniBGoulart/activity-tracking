@@ -6,7 +6,7 @@ use App\Models\Timer;
 use App\Transformers\Timer\TimerResource;
 use App\Http\Request\Timer\StoreTimer;
 use App\Services\ResponseService;
-use Illuminate\Support\Arr;
+use App\Transformers\Timer\TimerRunningResourceCollection;
 
 class TimerController extends Controller
 {
@@ -37,13 +37,7 @@ class TimerController extends Controller
 
     public function running(int $id)
     {
-        try {
-            $data = $this->timer->running($id);
-        } catch (\Throwable|\Exception $e) {
-            return ResponseService::exception($e);
-        }
-
-        return new TimerResource($data, ['type' => 'show', 'route' => 'timer.show']);
+        return new TimerRunningResourceCollection($this->timer->running($id), $id);
     }
 
     public function stopRunning(int $id, int $timerId)
