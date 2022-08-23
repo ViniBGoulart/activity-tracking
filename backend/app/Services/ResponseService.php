@@ -17,42 +17,35 @@ class ResponseService
                 return [
                     'status' => true,
                     'msg' => 'Success when inserting data',
-                    'url' => $secondId != null ? route($route, $id, $secondId) : ($id != null ? route($route, $id) : route($route))
+                    'url' => $secondId != null ? route($route, [$id, $secondId]) : ($id != null ? route($route, $id) : route($route))
                 ];
                 break;
             case 'show':
                 return [
                     'status' => true,
                     'msg' => 'Successful Request',
-                    'url' => $secondId != null ? route($route, $id, $secondId) : ($id != null ? route($route, $id) : route($route))
+                    'url' => $secondId != null ? route($route, [$id, $secondId]) : ($id != null ? route($route, $id) : route($route))
                 ];
                 break;
             case 'update':
                 return [
                     'status' => true,
                     'msg' => 'Successful update',
-                    'url' => $secondId != null ? route($route, $id, $secondId) : ($id != null ? route($route, $id) : route($route))
+                    'url' => $secondId != null ? route($route, [$id, $secondId]) : ($id != null ? route($route, $id) : route($route))
                 ];
                 break;
             case 'destroy':
                 return [
                     'status' => true,
                     'msg' => 'Successful delete',
-                    'url' => $secondId != null ? route($route, $id, $secondId) : ($id != null ? route($route, $id) : route($route))
+                    'url' => $secondId != null ? route($route, [$id, $secondId]) : ($id != null ? route($route, $id) : route($route))
                 ];
                 break;
             case 'stop':
                 return [
                     'status' => true,
                     'msg' => 'Successful stopped',
-                    'url' => $secondId != null ? route($route, $id, $secondId) : ($id != null ? route($route, $id) : route($route))
-                ];
-                break;
-            case 'stop':
-                return [
-                    'status' => true,
-                    'msg' => 'Successful stopped',
-                    'url' => $id != null ? route($route, $id) : route($route)
+                    'url' => $secondId != null ? route($route, [$id, $secondId]) : ($id != null ? route($route, $id) : route($route))
                 ];
                 break;
         }
