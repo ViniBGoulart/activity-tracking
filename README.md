@@ -1,28 +1,20 @@
 
 # Activity Tracking
+The Activity Tracking project was created to learn about how to create a CRUD with React and Laravel using axios API. We'll create Projects that will be able connect with a Timer, like Todo project with a timer for each. It will have more versions which I will document too, like a JEST implementation and project optimize.
 
-A CRUD to registry your activity with a timer to count and control the hours spent. Made to pratice React and Laravel. 
+## Why use these technologies?
+I chose these technologies because have a big community and documentations to support. Laravel is a very complete backend framework with a nice folder structure created in installation. React is a new and complete Javascript frontend library, which also has a good community to consult.
 
-I did this for control hours worked outside the company, because the existing software which does this is in company local
-
+## Build with me
+This project has a "how to build" in dev.to, you can access this link [How to create a CRUD App with React and Laravel](https://dev.to) to see the steps creating this project.
 ## Run Locally
-
 Clone the project
-
 ```bash
   git clone https://github.com/ViniBGoulart/activity-tracking.git
+
 ```
 
-Go to the project directory
-
-```bash
-  cd activity-tracking
-```
-
-### API
-
-#### Start Server
-
+### Start Server
 ```bash
   cd backend
 ```
@@ -30,19 +22,10 @@ Go to the project directory
   composer install
 ```
 ```bash
-  php artisan migrate
-```
-```bash
-  php artisan jwt:secret
-```
-```bash
   php artisan serve
 ```
 
-### Web App
-
-#### Start Web App
-
+### Start Web App
 ```bash
   cd webapp
 ```
@@ -52,3 +35,24 @@ Go to the project directory
 ```bash
   npm start
 ```
+
+
+# Activity Tracking
+The Activity Tracking project was created to learn about how to create a CRUD with React and Laravel using axios API. We'll create Projects that will be able connect with a Timer, like Todo project with a timer for each. It will have more versions which I will document too, like a JEST implementation and project optimize.
+
+## Why use these technologies?
+I chose these technologies because have a big community and documentations to support. Laravel is a very complete backend framework with a nice folder structure created in installation. React is a new and complete Javascript frontend library, which also has a good community to consult.
+
+## Build with me
+This project has a "how to build" in dev.to, you can access this link [How to create a CRUD App with React and Laravel](https://dev.to) to see the steps creating this project.
+## API Reference
+
+#### Endpoints
+
+| Method | Endpoint | Params     | Description                |
+| :-------- | :-------- | :------- | :------------------------- |
+| `post` | `/api/register` | `JSON {name, email, password, password_confirmation}` | **Register** a user. |
+
+## Demo
+
+https://user-images.githubusercontent.com/88122830/186317825-9e4be4de-0b02-440c-9f0f-a4931f4bd253.mp4
