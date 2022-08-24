@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 
-Route::group(['middleware' => 'jwt.verify', 'prefix' => 'auth'], function ($router) {
+Route::group(['middleware' => 'jwt.verify', 'prefix' => 'auth'], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);
@@ -29,7 +29,7 @@ Route::group(['middleware' => 'jwt.verify', 'prefix' => 'auth'], function ($rout
     Route::post('/projects', [ProjectController::class, 'store'])->name('project.store');
     Route::delete('/projects/{id}', [ProjectController::class, 'destroy'])->name('project.destroy');
 
-    Route::group(['prefix' => '/projects/{id}', 'as' => 'timer.'], function ($router) {
+    Route::group(['prefix' => '/projects/{id}', 'as' => 'timer.'], function () {
         Route::post('/timers', [TimerController::class, 'store'])->name('store');
         Route::post('/timers/{timerId}/stop', [TimerController::class, 'stopRunning'])->name('stop');
 
