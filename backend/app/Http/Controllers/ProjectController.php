@@ -4,18 +4,28 @@ namespace App\Http\Controllers;
 
 use App\Http\Request\Project\StoreProject;
 use App\Models\Project;
+use App\Models\Timer;
 use App\Services\ResponseService;
 use App\Transformers\Project\ProjectResource;
 use App\Transformers\Project\ProjectResourceCollection;
 
 class ProjectController extends Controller
 {
+    /**
+     * @var Project
+     */
     private $project;
 
-    public function __construct(Project $project)
+    /**
+     * @var Timer
+     */
+    private $timer;
+
+    public function __construct(Project $project, Timer $timer)
     {
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
         $this->project = $project;
+        $this->timer = $timer;
     }
 
     public function index()
@@ -37,6 +47,7 @@ class ProjectController extends Controller
     public function destroy(int $id)
     {
         try {
+            $this->timer->destroyTimers($id);
             $data = $this->project->destroyProject($id);
         } catch (\Throwable|\Exception $e) {
             return ResponseService::exception($e);
