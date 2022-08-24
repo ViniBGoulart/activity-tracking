@@ -63,6 +63,11 @@ class Timer extends Model
         return $timer;
     }
 
+    public function destroyTimers(int $id)
+    {
+        return Timer::mine()->where([['project_id', '=', $id]])->delete() ?? false;
+    }
+
     /**
      * Get the related user.
      *
