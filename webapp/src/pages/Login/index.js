@@ -25,8 +25,14 @@ export default function Login() {
 
             navigate("/home");
         } catch (err) {
-            alert("Error on Login, try again.");
+            handleStyleFailFiedls();
         }
+    };
+
+    const handleStyleFailFiedls = () => {
+        document.getElementById('password-alert').classList.remove('hidden');
+        document.getElementById('password-input').classList.add('border-red-500');
+        document.getElementById('email-input').classList.add('border-red-500');
     };
 
     return (
@@ -47,6 +53,7 @@ export default function Login() {
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                             placeholder="Email"
                             type="text"
+                            id="email-input"
                             {...register("email")}
                         />
                     </div>
@@ -58,13 +65,14 @@ export default function Login() {
                             Password
                         </label>
                         <input
-                            className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                             placeholder="******"
                             type="password"
+                            id="password-input"
                             {...register("password")}
                         />
-                        <p className="text-red-500 text-xs italic">
-                            Please choose a password.
+                        <p className="hidden text-red-500 text-xs italic" id="password-alert">
+                            Check your credentials and try again.
                         </p>
                     </div>
                     <div className="flex items-center justify-between">
