@@ -33,9 +33,9 @@ Route::group(['middleware' => 'jwt.verify', 'prefix' => 'auth'], function () {
         Route::post('/timers', [TimerController::class, 'store'])->name('store');
         Route::post('/timers/{timerId}/stop', [TimerController::class, 'stopRunning'])->name('stop');
 
-        Route::get('/timers', [TimerController::class, 'index'])->name('index');
-        Route::get('/timers/today', [TimerController::class, 'today'])->name('today');
-        Route::get('/timers/active', [TimerController::class, 'running'])->name('running');
+        Route::get('/timers', [TimerController::class, 'projectIndex'])->name('projectIndex');
+        Route::get('/timers/today', [TimerController::class, 'projectToday'])->name('projectToday');
+        Route::get('/timers/active', [TimerController::class, 'projectRunning'])->name('projectRunning');
     });
 });
 

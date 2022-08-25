@@ -8,7 +8,9 @@ use App\Http\Request\Timer\StoreTimer;
 use App\Services\ResponseService;
 use App\Transformers\Timer\TimerResourceCollection;
 use App\Transformers\Timer\TimerRunningResourceCollection;
+use App\Transformers\Timer\TimerSpendResource;
 use App\Transformers\Timer\TimerTodayResourceCollection;
+use DateTime;
 
 class TimerController extends Controller
 {
@@ -20,9 +22,9 @@ class TimerController extends Controller
         $this->timer = $timer;
     }
 
-    public function index($id)
+    public function projectIndex($id)
     {
-        return new TimerResourceCollection($this->timer->index($id));
+        return new TimerResourceCollection($this->timer->projectIndex($id));
     }
 
     public function store(StoreTimer $request, int $id)
@@ -42,14 +44,14 @@ class TimerController extends Controller
         return new TimerResource($data, ['type' => 'store', 'route' => 'timer.store']);
     }
 
-    public function today($id)
+    public function projectToday($id)
     {
-        return new TimerTodayResourceCollection($this->timer->today($id));
+        return new TimerTodayResourceCollection($this->timer->projectToday($id));
     }
 
-    public function running(int $id)
+    public function projectRunning(int $id)
     {
-        return new TimerRunningResourceCollection($this->timer->running($id), $id);
+        return new TimerRunningResourceCollection($this->timer->projectRunning($id));
     }
 
     public function stopRunning(int $id, int $timerId)
