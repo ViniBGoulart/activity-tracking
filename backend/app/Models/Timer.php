@@ -22,7 +22,7 @@ class Timer extends Model
      */
     protected $with = ['user'];
 
-    public function index($id)
+    public function projectIndex($id)
     {
         return Timer::with('project')->where('project_id', $id)->get() ?? [];
     }
@@ -35,18 +35,18 @@ class Timer extends Model
                 'name' => $request['name'],
                 'description' => $request['description'],
                 'user_id' => auth()->user()->id,
-                'started_at' => Carbon::now()->toDateTimeString(),
+                'started_at' => date('H:i:s'),
             ]));
 
         return $timer->with('project')->find($timer->id);
     }
 
-    public function today($id)
+    public function projectToday($id)
     {
         return Timer::with('project')->where('project_id', $id)->whereDate('created_at', Carbon::today())->get();
     }
 
-    public function running(int $id)
+    public function projectRunning(int $id)
     {
         return Timer::with('project')->where('project_id', $id)->running()->get() ?? [];
     }
@@ -57,7 +57,7 @@ class Timer extends Model
             ['project_id', '=', $id],
             ['id', '=', $timerId]
         ])->first()) {
-            $timer->update(['stopped_at' => Carbon::now()->toDateTimeString()]);
+            $timer->update(['stopped_at' => date('H:i:s')]);
         }
 
         return $timer;
