@@ -1,6 +1,6 @@
 
 # Activity Tracking
-The Activity Tracking project was created to learn about how to create a CRUD with React and Laravel using axios API. We'll create Projects that will be able connect with a Timer, like Todo project with a timer for each. It will have more versions which I will document too, like a JEST implementation and project optimize.
+A React Activity Tracking project was created to learn about how to create a CRUD with React and Laravel using axios API. We'll create Projects that will be able connect with a Timer, like Todo project with a timer for each.
 
 ## Why use these technologies?
 I chose these technologies because have a big community and documentations to support. Laravel is a very complete backend framework with a nice folder structure created in installation. React is a new and complete Javascript frontend library, which also has a good community to consult.
