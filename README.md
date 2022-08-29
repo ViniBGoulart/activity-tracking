@@ -8,6 +8,8 @@ A React Activity Tracking project was created to learn about how to create a CRU
 - Tailwind
 - MySQL
 - Axios
+- NPM
+- Composer
 
 ## Why use these technologies?
 I chose these technologies because have a big community and documentations to support. Laravel is a very complete backend framework with a nice folder structure created in installation. React is a new and complete Javascript frontend library, which also has a good community to consult.
