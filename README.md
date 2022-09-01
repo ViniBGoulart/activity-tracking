@@ -1,56 +1,14 @@
 
-# Activity Tracking
-A React Activity Tracking project was created to learn about how to create a CRUD with React and Laravel using axios API. We'll create Projects that will be able connect with a Timer, like Todo project with a timer for each.
+# protect-route-with-jwt
+The Activity Tracking project was created to learn about how to create a CRUD with React and Laravel using axios API. We'll create Projects that will be able connect with a Timer, like Todo project with a timer for each. It will have more versions which I will document too, like a JEST implementation and project optimize.
 
-## Used technologies
-- React
-- Laravel
-- Tailwind
-- MySQL
-- Axios
-- NPM
-- Composer
-
-## Why use these technologies?
-I chose these technologies because have a big community and documentations to support. Laravel is a very complete backend framework with a nice folder structure created in installation. React is a new and complete Javascript frontend library, which also has a good community to consult.
+## What will be done?
+We’ll learn how to protected a route by JWT authentication in react-router-dom v6. The routes will only be accessible when users have the token saved in cookies(or local storage).
 
 ## Build with me
-This project has a "how to build" in dev.to, you can access this link [How to create a CRUD App with React and Laravel](https://dev.to) to see the steps creating this project.
+This project has a "how to build" in dev.to, you can access this link [How to protect a route with JWT Token in React using Context API and React Cookies](https://dev.to/vinibgoulart/how-to-protected-a-route-with-jwt-token-in-react-using-context-api-l38) to see the steps creating this project.
 ## Run Locally
-Clone the project
 ```bash
-  git clone https://github.com/ViniBGoulart/activity-tracking.git
-
+  yarn
+  yarn start
 ```
-
-### Start Server
-```bash
-  cd backend
-```
-```bash
-  composer install
-```
-```bash
-  php artisan serve
-```
-
-### Start Web App
-```bash
-  cd webapp
-```
-```bash
-  npm install
-```
-```bash
-  npm start
-```
-
-#### Endpoints
-
-| Method | Endpoint | Params     | Description                |
-| :-------- | :-------- | :------- | :------------------------- |
-| `post` | `/api/register` | `JSON {name, email, password, password_confirmation}` | **Register** a user. |
-
-## Demo
-
-https://user-images.githubusercontent.com/88122830/186317825-9e4be4de-0b02-440c-9f0f-a4931f4bd253.mp4
