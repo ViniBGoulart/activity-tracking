@@ -44,12 +44,6 @@ Clone the project
   npm start
 ```
 
-#### Endpoints
-
-| Method | Endpoint | Params     | Description                |
-| :-------- | :-------- | :------- | :------------------------- |
-| `post` | `/api/register` | `JSON {name, email, password, password_confirmation}` | **Register** a user. |
-
 ## Demo
 
 https://user-images.githubusercontent.com/88122830/186317825-9e4be4de-0b02-440c-9f0f-a4931f4bd253.mp4
